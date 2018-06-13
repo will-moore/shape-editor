@@ -359,11 +359,23 @@ $(function() {
     $("input[name='strokeColor']").click(function(){
       strokeColor = $(this).val();
       console.log("strokeColor", strokeColor);
+      // Upate all selected objects...
+      var activeObjs = canvas.getActiveObjects();
+      activeObjs.forEach(function(o){
+        o.set('stroke',strokeColor);
+      });
+      canvas.renderAll();
     });
 
     $("select[name='strokeWidth']").change(function(){
         strokeWidth = parseFloat($(this).val());
         console.log('strokeWidth', strokeWidth);
+        // Upate all selected objects...
+        var activeObjs = canvas.getActiveObjects();
+        activeObjs.forEach(function(o){
+          o.set('strokeWidth',strokeWidth);
+        });
+        canvas.renderAll();
     });
 
     var updateZoom = function updateZoom() {
@@ -584,7 +596,7 @@ $(function() {
       width: 125, height: 150,
       stroke: "#ff00ff",
       fill: 'rgba(0, 0, 0, 0)',
-      strokeWidth: 10,
+      strokeWidth: 6,
       lockRotation: true,
     });
     canvas.add(rect);
@@ -639,23 +651,35 @@ $(function() {
     }
 
 
-    var arrow1 = new fabric.LineArrow([25, 150, 200, 100], {fill: '#ffff00',
+    var arrow1 = new fabric.LineArrow([325, 250, 200, 200], {fill: '#ffff00',
         stroke: '#ffffff',
+        originX: 'center', originY: 'center',
         strokeWidth: 1}
     );
     canvas.add(arrow1);
 
     var arrow2 = new fabric.LineArrow([25, 450, 200, 400], {fill: '#ffff00',
         stroke: '#ffff00',
+        originX: 'center', originY: 'center',
         strokeWidth: 4}
     );
 
     var arrow3 = new fabric.LineArrow([25, 250, 200, 200], {fill: '#ffff00',
         stroke: '#ffff00',
+        originX: 'center', originY: 'center',
         strokeWidth: 10}
     );
 
     canvas.add(arrow2, arrow3);
+
+
+
+    var greenline = new fabric.Line([425, 250, 200, 400], {fill: '#00ff00',
+        stroke: '#00ff00',
+        originX: 'center', originY: 'center',
+        strokeWidth: 1}
+    );
+    canvas.add(greenline);
 
     // shapeManager.addShapeJson({"type": "Ellipse",
     //                           "strokeColor": "#00ff00",
