@@ -336,14 +336,18 @@ $(function() {
         canvas.off('mouse:up');
         canvas.forEachObject(function(o){
             o.setCoords();
+            o.set('selectable', true);
         });
       } else if (state === "SELECT") {
         // Only re-bind events if we *were* in SELECT state
-        // TODO: turn off selection of existing shapes!
         canvas.selection = false;
         canvas.observe('mouse:down', handleMouseDown);
         canvas.observe('mouse:move', handleMouseMove);
         canvas.on('mouse:up', handleMouseUp);
+
+        canvas.forEachObject(function(o){
+          o.set('selectable', false);
+        });
       }
       state = newState;
     }
